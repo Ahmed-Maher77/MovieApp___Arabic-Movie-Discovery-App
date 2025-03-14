@@ -34,13 +34,13 @@ MovieApp is a simple yet powerful movie discovery platform where users can searc
 <hr />
 
 ## 🔧 Installation & Setup  
-1. Clone the repository:  
-- git clone https://github.com/yourusername/CineScope.git
-- cd MovieApp
-2. Install dependencies:
-- Copy code
-- npm install
-3. Create a .env file and add your API key:
-- VITE_API_KEY=your_api_key_here
-4. Start the development server:
-- npm run dev
+1. **Clone the repository:** <br/>
+-- git clone https://github.com/yourusername/CineScope.git <br/>
+-- cd MovieApp
+2. **Install dependencies:** <br/>
+-- Copy code <br/>
+-- npm install
+3. **Create a .env file and add your API key:** <br/>
+-- VITE_API_KEY=your_api_key_here <br/>
+4. **Start the development server:** <br/>
+-- npm run dev
