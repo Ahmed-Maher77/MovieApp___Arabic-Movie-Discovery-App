@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap");
+
+/* ===================== Global Variables ===================== */
+:root {
+  direction: rtl;
+	--main-c: #bc6132;
+	--white-c: #ffffff;
+	--white-fixed-c: #ffffff;
+	--gray-c: #eee;
+	--gray-fixed-c: #eee;
+	--dark-c: #000;
+	--dark-fixed-c: #000;
+	--red-c: #df0808;
+	--trans-3: 0.3s;
+}
+
+/* ===================== Body ===================== */
+body {
+  font-family: "Almarai", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#root {
+	min-height: 100vh;
+}
+
+
+/* ===================== Shared Classes ===================== */
+/* colors */
+.main-color {
+	color: var(--main-c);
+}
+.main-bg {
+	background-color: var(--main-c);
+}
+.white-color {
+	color: var(--white-c);
+}
+.white-fixed-color {
+  color: var(--white-fixed-c);
+}
+.dark-color {
+	color: var(--dark-c);
+}
+.dark-fixed-color {
+	color: var(--dark-fixed-c);
+}
+.red-color {
+  color: var(--red-c);
+}
+.gray-color {
+  color: var(--gray-c);
+}
+.gray-bg {
+  background-color: var(--gray-c);
+}
+.gray-fixed-color {
+  color: var(--gray-fixed-c);
+}
+/* Transations */
+.trans-3 {
+	transition: var(--trans-3);
+}
+/* Buttons */
+.btn-main {
+	background-color: var(--main-c);
+	color: var(--white-c);
+	border-color: var(--main-c);
+	padding: 12px 20px;
+	&:hover {
+		background-color: transparent;
+		border-color: #cc5114;
+		color: var(--main-c);
+	}
+}
+/* Width */
+.w-fit {
+	width: fit-content;
+}
+
+
+/* Pagination Styles */
+.Pagination {
+	button {
+		border-color: var(--main-c) !important;
+		color: var(--main-c) !important;
+		&.active {
+			background-color: var(--main-c) !important;
+			color: var(--white-c) !important;
+		}
+		&:hover {
+			background-color: #cc5114 !important;
+			color: var(--white-c) !important;
+		}
+	}
+}
+
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {  }
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {  }
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {  }

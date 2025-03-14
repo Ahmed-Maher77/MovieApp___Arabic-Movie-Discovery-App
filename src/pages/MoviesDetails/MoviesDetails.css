@@ -1,0 +1,74 @@
+.Movies-Details {
+	.container {
+		main {
+			figure {
+				max-width: 290px;
+				max-height: 410px;
+				.poster-overlay {
+					background-image: linear-gradient(to bottom, #00000013, #000000c2);
+					backdrop-filter: blur(3px);
+					opacity: 0;
+					transition: 0.3s;
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+			.details-info {
+				p {
+					padding-block: 15px;
+					margin-bottom: 0;
+					color: #161616;
+					&:not(:last-of-type) {
+						border-bottom: 1px solid #e7e7e7;
+					}
+					b {
+						font-size: 1.01rem;
+						color: #000;
+					}
+				}
+			}
+		}
+	}
+}
+
+.GoBack_Btn {
+	transition-duration: 0.3s;
+	&:hover {
+		background-color: #565e649e;
+		border-color: #565e649e;
+	}
+}
+
+.story {
+	h3 {
+		position: relative;
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			width: 120px;
+			height: 1.5px;
+			right: 1px;
+			background-color: var(--main-c);
+		}
+		&::before {
+            bottom: -7px;
+		}
+		&::after {
+            bottom: -10px;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.Movies-Details {
+		.container {
+			main {
+				figure {
+					max-height: 480px;
+				}
+			}
+		}
+	}
+}
