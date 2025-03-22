@@ -2,7 +2,9 @@ import propTypes from "prop-types";
 
 // Movie Detail Row Component
 const MovieDetail = ({ label, value }) => {
-	if (!value) return null; // Avoids rendering empty rows
+	if (!value) {
+		return null; // Avoids rendering empty rows
+	}
 	return (
 		<p>
 			<b className="ms-2">{label}:</b> {value}

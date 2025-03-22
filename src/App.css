@@ -2,11 +2,12 @@
 
 /* ===================== Global Variables ===================== */
 :root {
-  direction: rtl;
+	direction: rtl;
 	--main-c: #bc6132;
 	--white-c: #ffffff;
 	--white-fixed-c: #ffffff;
 	--gray-c: #eee;
+	--d-gray-fixed-color: rgb(216, 216, 216);
 	--gray-fixed-c: #eee;
 	--dark-c: #000;
 	--dark-fixed-c: #000;
@@ -16,14 +17,14 @@
 
 /* ===================== Body ===================== */
 body {
-  font-family: "Almarai", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Almarai", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	overflow-x: hidden;
 }
 #root {
 	min-height: 100vh;
 }
-
 
 /* ===================== Shared Classes ===================== */
 /* colors */
@@ -37,7 +38,7 @@ body {
 	color: var(--white-c);
 }
 .white-fixed-color {
-  color: var(--white-fixed-c);
+	color: var(--white-fixed-c);
 }
 .dark-color {
 	color: var(--dark-c);
@@ -46,16 +47,19 @@ body {
 	color: var(--dark-fixed-c);
 }
 .red-color {
-  color: var(--red-c);
+	color: var(--red-c);
 }
 .gray-color {
-  color: var(--gray-c);
+	color: var(--gray-c);
 }
 .gray-bg {
-  background-color: var(--gray-c);
+	background-color: var(--gray-c);
 }
 .gray-fixed-color {
-  color: var(--gray-fixed-c);
+	color: var(--gray-fixed-c);
+}
+.d-gray-fixed-color {
+	color: var(--d-gray-fixed-color);
 }
 /* Transations */
 .trans-3 {
@@ -78,7 +82,6 @@ body {
 	width: fit-content;
 }
 
-
 /* Pagination Styles */
 .Pagination {
 	button {
@@ -95,19 +98,22 @@ body {
 	}
 }
 
-
-
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {  }
+@media (min-width: 576px) {
+}
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {  }
+@media (min-width: 768px) {
+}
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {  }
+@media (min-width: 992px) {
+}
 
 /* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) {
+}
 
 /* XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) {  }
+@media (min-width: 1400px) {
+}

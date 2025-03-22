@@ -5,17 +5,20 @@ import "./MoviesDetails.css";
 import formatList from "./formatList";
 import GoBack_Btn from "./GoBack_Btn";
 import MovieContent from "./MovieContent";
+import { motion } from "framer-motion";
+import { moviesDetailsPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
 
 const MoviesDetails = () => {
 	const { id } = useParams();
 	const { data: movieData, isLoading, error } = useFetchMovie(id);
 
-	console.log(movieData);
-
 	// Loading State
 	if (isLoading) {
 		return (
-			<div className="d-flex justify-content-center align-items-center" style={{minHeight: "calc(100vh - 73px)"}}>
+			<div
+				className="d-flex justify-content-center align-items-center"
+				style={{ minHeight: "calc(100vh - 73px)" }}
+			>
 				<Loader title="...Loading Movie Data" />
 			</div>
 		);
@@ -24,7 +27,10 @@ const MoviesDetails = () => {
 	// Error Handling
 	if (error || !movieData) {
 		return (
-			<div className="text-center my-5" style={{minHeight: "calc(100vh - 400px)"}}>
+			<div
+				className="text-center my-5"
+				style={{ minHeight: "calc(100vh - 400px)" }}
+			>
 				<h2>Something went wrong</h2>
 				<span className="red-color">
 					{error || "Failed to fetch movie details."}
@@ -71,13 +77,27 @@ const MoviesDetails = () => {
 	];
 
 	return (
-		<div className="Movies-Details" style={{ minHeight: "calc(100vh - 75px)" }}>
+		<motion.div
+			className="Movies-Details overflow-hidden"
+			style={{ minHeight: "calc(100vh - 75px)" }}
+			key="Movies-Details"
+			variants={moviesDetailsPageVariants}
+			initial="initial"
+			animate="animate"
+			exit="exit"
+		>
 			<div className="container">
 				<GoBack_Btn />
 
-				<MovieContent poster_path={poster_path} homepage={homepage} title={title} movieDetails={movieDetails} overview={overview} />
+				<MovieContent
+					poster_path={poster_path}
+					homepage={homepage}
+					title={title}
+					movieDetails={movieDetails}
+					overview={overview}
+				/>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

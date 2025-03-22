@@ -1,45 +1,66 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import React, { Suspense, useMemo } from "react";
+import { Provider } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
+import store from "./utils/redux-toolkit/store.js";
+
 import Layout from "./pages/Layout";
-import React, { Suspense } from "react";
-import Home from "./pages/Home"
-const MoviesList = React.lazy(() => import ("./pages/MoviesList/MoviesList"));
+import Home from "./pages/Home";
 import MainLoader from "./components/Loader/MainLoader";
-const MoviesDetails = React.lazy(() => import ("./pages/MoviesDetails/MoviesDetails"));
-const NotFound = React.lazy(() => import ("./pages/NotFound.jsx"));
-import { Provider} from "react-redux";
-import store from "./utils/redux-toolkit/store.js"
+
+// Lazy-loaded pages to improve performance
+const MoviesList = React.lazy(() => import("./pages/MoviesList/MoviesList"));
+const MoviesDetails = React.lazy(() => import("./pages/MoviesDetails/MoviesDetails"));
+const NotFound = React.lazy(() => import("./pages/NotFound.jsx"));
 
 function App() {
-	const router = createBrowserRouter([
-		{
-			element: <Layout />,
-			children: [
-				{ path: "/", element: <Home /> },
+	const router = useMemo(       // to prevent unnecessary re-creation of the router
+		() =>
+			createBrowserRouter([
 				{
-					path: "/movies",
-					element: (
-						<Suspense fallback={<MainLoader />}><MoviesList /></Suspense>
-					),
+					element: <Layout />,
+					children: [
+						{ path: "/", element: <Home /> },
+						{
+							path: "/movies",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<MoviesList />
+								</Suspense>
+							),
+						},
+						{
+							path: "/movies/:id",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<MoviesDetails />
+								</Suspense>
+							),
+						},
+						{
+							path: "*",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<NotFound />
+								</Suspense>
+							),
+						},
+					],
 				},
-				{
-					path: "/movies/:id",
-					element: (
-						<Suspense fallback={<MainLoader />}><MoviesDetails /></Suspense>
-					),
-				},
-				{
-					path: "*",
-					element: (
-						<Suspense fallback={<MainLoader />}><NotFound /></Suspense>
-					),
-				},
-			],
-		},
-	]);
-	return <Provider store={store}>
-		<RouterProvider router={router} />;
-	</Provider>
+			]),
+		[]
+	);
+
+	return (
+		<Provider store={store}>
+			<AnimatePresence mode="wait">       {/* for smooth page transitions */}
+				<motion.div key={window.location.pathname}>
+					<RouterProvider router={router} />
+				</motion.div>
+			</AnimatePresence>
+		</Provider>
+	);
 }
 
 export default App;

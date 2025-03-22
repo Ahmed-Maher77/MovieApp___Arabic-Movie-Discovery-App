@@ -1,30 +1,34 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import { setIsLargeScreen } from "../utils/redux-toolkit/windowSlice.js";
 import Footer from "../components/Footer/Footer.jsx";
+import AnimatedScrollToTop from "../common/AnimatedScrollToTop.jsx";
 
 const Layout = () => {
 	const dispatch = useDispatch();
 
-	// 
-	useEffect(() => {
-		const hanldeResize = () => {
-			dispatch(setIsLargeScreen(window.innerWidth > 991));
-		}
-		window.addEventListener("resize", hanldeResize);
-		return () => window.removeEventListener("resize", hanldeResize);
-	}, [dispatch])
+	const handleResize = useCallback(() => {
+		dispatch(setIsLargeScreen(window.innerWidth > 991));
+	}, [dispatch]);
+
+	// useLayoutEffect for faster execution
+	useLayoutEffect(() => {
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [handleResize]);
 
 	return (
-		
-			<div>
-				<NavBar />
-				<Outlet />
-				<Footer />
-			</div>
-		
+		<div>
+			{/* Ensure the page scrolls to the top on route change */}
+			<AnimatedScrollToTop />
+
+			<NavBar />
+			<Outlet />
+			<Footer />
+		</div>
 	);
 };
 

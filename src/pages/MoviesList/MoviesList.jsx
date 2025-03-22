@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { useSelector } from "react-redux";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import useFetchAllMovies from "../../utils/api/useFetchAllMovies";
 import useSearchMovies from "../../utils/api/useSearchMovies";
 import Loader from "../../components/Loader/Loader";
 import Pagination from "./Pagination";
+import { motion } from "framer-motion";
+import { moviesListPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
+import AnimatedScrollToTop from "../../common/AnimatedScrollToTop";
 
 const MoviesList = () => {
 	// Get search query from Redux state
@@ -21,23 +24,32 @@ const MoviesList = () => {
 
 	// Determine which movies to display
 	const isSearchingMode = searchQuery.length > 0;
-	const moviesToDisplay = isSearchingMode ? searchedMovies?.results : allMovies?.results;
+	const moviesToDisplay = useMemo(
+		() => (isSearchingMode ? searchedMovies?.results : allMovies?.results),
+		[isSearchingMode, searchedMovies, allMovies]
+	);
+
+	// Pagination logic (disabled for search results)
 	const totalPages = isSearchingMode
 		? 1 // No pagination for search results
 		: Math.min(allMovies?.total_pages || 1, 500);
+		const pageRange = 1; // Number of pages to show at a time
+		const startPage = Math.max(1, page - Math.floor(pageRange / 2));
+		const endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+	const handleSetPage = useCallback((newPage) => setPage(newPage), []);
 
 	const isDataLoading = isSearchingMode ? isSearching : isLoading;
 	const hasError = isSearchingMode ? searchError : error;
 
-	const pageRange = 1; // Number of pages to show at a time
-	const startPage = Math.max(1, page - Math.floor(pageRange / 2));
-	const endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+
 
 	// Handle loading state
 	if (isDataLoading) {
 		return (
 			<div className="d-flex justify-content-center align-items-center" style={{minHeight: "calc(100vh - 73px)"}}>
-				<Loader title="...Loading Movies" />
+				<Loader title="...Loading Movies" aria-live="polite" />
 			</div>
 		);
 	}
@@ -53,14 +65,20 @@ const MoviesList = () => {
 	}
 
 	return (
-		<div className="MoviesList" style={{minHeight: "calc(100vh - 73px)"}}>
+		<motion.div 
+			className="MoviesList overflow-hidden" style={{minHeight: "calc(100vh - 73px)"}}
+			key="MoviesList"
+			variants={moviesListPageVariants}
+			initial="initial"
+			animate="animate"
+			exit="exit">
 			<div className="container py-4">
 				{/* ================== Display Data (Movies Cards) ================== */}
 				<main className="row">
 					{moviesToDisplay?.length > 0 ? (
-						moviesToDisplay?.map((movie, i) => (
+						moviesToDisplay?.map((movie) => (
 							<MovieCard
-								key={i}
+								key={movie.id}
 								imgSrc={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 								title={movie.title}
 								date={movie.release_date}
@@ -78,10 +96,13 @@ const MoviesList = () => {
 				</main>
 
 				{/* ================== Pagination ================== */}
-				<Pagination setPage={setPage} page={page} startPage={startPage} endPage={endPage} totalPages={totalPages} />
+				<Pagination setPage={handleSetPage} page={page} startPage={startPage} endPage={endPage} totalPages={totalPages} />
+
+				{/* ================== Scroll to Top when page changes ================== */}
+				<AnimatedScrollToTop dependancy={page} />
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 
-export default MoviesList;
+export default memo(MoviesList);

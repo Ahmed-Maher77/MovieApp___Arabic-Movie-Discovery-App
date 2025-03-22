@@ -1,11 +1,11 @@
 import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import "./NavBar.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchByValue } from "../../utils/redux-toolkit/searchMovies_Slice";
+import logo from "../../assets/logo.png";
+import "./NavBar.css";
 
-const NavBar = () => {
+const NavBar = memo(() => {
 	const { pathname } = useLocation();
 	const dispatch = useDispatch();
 	const searchByValue = useSelector(state => state.search_movies.searchByValue);
@@ -13,34 +13,38 @@ const NavBar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const closeBtnRef = useRef();
 	
+	// Toggle search bar only on the movies page
 	useEffect(() => {
 		setShowSearch(pathname === "/movies")
 	}, [pathname])
 
+	// Close mobile menu
 	const closeMenu = () => {
 		setIsMenuOpen(false);
-		closeBtnRef.current.click();
+		closeBtnRef.current?.click();
 	};
 
-	const handleSearch = (e) => {
-		const value = e.target.value.trim();
-		dispatch(setSearchByValue(value))
-	}
+	// Handle search input efficiently
+	const handleSearch = useCallback((e) => {
+		dispatch(setSearchByValue(e.target.value));
+	}, [dispatch]);
 
 	return (
 		<div className="Navbar main-bg main-color">
 			<nav className="navbar navbar-expand-lg px-2 flex-column" id="navbar">
 				<div className="container">
 					{/* =========== Logo =========== */}
-					<NavLink className="navbar-brand fw-bold" to="/" onClick={() => closeBtnRef.current.click()}>
-						<img src={logo} alt="logo" />
+					<NavLink className="navbar-brand fw-bold" to="/" onClick={() => closeBtnRef.current?.click()}>
+						<img src={logo} alt="App logo" />
 					</NavLink>
 
 					{/* ============== Burger Icon + Search Icon ============== */}
 					<div className="burger-search-wraper d-flex gap-3 align-items-center">
-						<div className={`search-icon fs-4 btn ms-auto ${pathname === "/movies" ? "d-none" : "d-block d-lg-block"} d-lg-none`} onClick={() => setShowSearch(true)}>
+						{/* Mobile search icon (hidden on movies page) */}
+						<div className={`search-icon fs-4 btn ms-auto ${pathname === "/movies" ? "d-none" : "d-block d-lg-block"} d-lg-none`} onClick={() => setShowSearch(true)} aria-label="Search movies">
 							<span className="fa-solid fa-magnifying-glass white-color"></span>
 						</div>
+						{/* Burger menu toggle */}
 						<button
 							className="navbar-toggler position-relative"
 							type="button"
@@ -57,16 +61,11 @@ const NavBar = () => {
 						</button>
 					</div>
 
-					{/* ================ Links ================ */}
+					{/* ================ Navigation Links ================ */}
 					<div className={`collapse navbar-collapse mt-2`} id="navbarTogglerDemo02">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0 pe-1">
 							<li className="nav-item">
-								<NavLink
-									className="nav-link fs-5 px-3"
-									aria-current="page"
-									to="/"
-									onClick={closeMenu}
-								>
+								<NavLink className="nav-link fs-5 px-3" aria-current="page" to="/" onClick={closeMenu}>
 									الرئيسية
 								</NavLink>
 							</li>
@@ -77,7 +76,8 @@ const NavBar = () => {
 								</NavLink>
 							</li>
 
-							<div className={`search-icon fs-4 btn ${pathname === "/movies" ? "d-none" : ""} d-none d-lg-block`} onClick={() => setShowSearch(true)}>
+							{/* Desktop search icon (hidden on movies page) */}
+							<div className={`search-icon fs-4 btn ${pathname === "/movies" ? "d-none" : ""} d-none d-lg-block`} onClick={() => setShowSearch(true)} aria-label="Search movies">
 								<span className="fa-solid fa-magnifying-glass white-color"></span>
 							</div>
 
@@ -99,15 +99,16 @@ const NavBar = () => {
 									value={searchByValue}
 									onChange={handleSearch}
 								/>
-								{/* search icon */}
+								{/* Search icon inside input (only visible when input is empty) */}
 								{searchByValue.length > 0 || <span className="fa-solid fa-magnifying-glass dark-color fs-5 position-absolute"></span>}
 							</div>
 							
-							{/* ======= close search  ======= */}
+							{/* Close search button */}
 							<span
 								className={`fa-solid fa-xmark dark-color fs-4 p-2 trans-3 ${pathname === "/movies" ? "d-none" : ""}`}
 								type="button"
 								onClick={() => setShowSearch(false)}
+								aria-label="Close search"
 							></span>
 						</form>
 					</div>
@@ -115,6 +116,9 @@ const NavBar = () => {
 			</nav>
 		</div>
 	);
-};
+});
+
+// Add display name for better debugging
+NavBar.displayName = "NavBar";
 
 export default NavBar;

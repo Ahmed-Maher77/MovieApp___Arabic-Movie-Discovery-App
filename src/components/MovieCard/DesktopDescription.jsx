@@ -1,8 +1,9 @@
 import propTypes from "prop-types";
+import { memo } from "react";
 
-const DesktopDescription = ({ title, date, vote_count, rate }) => {
+const DesktopDescription = memo(({ title, date, vote_count, rate }) => {
 	return (
-		<figcaption className="card-body position-absolute w-100 h-100 px-4 d-flex justify-content-center align-items-center d-none d-lg-flex">
+		<figcaption className="card-body position-absolute w-100 h-100 px-4 d-flex justify-content-center align-items-center d-none d-lg-flex" aria-label={`Movie details for ${title}`}>
 			<div>
 				{/* Movie Title */}
 				<h3 className="card-title text-center fs-5">{title}</h3>
@@ -10,11 +11,11 @@ const DesktopDescription = ({ title, date, vote_count, rate }) => {
 				{/* Movie Details */}
 				<div className="details d-flex flex-column gap-2 text-center mt-5">
 					<span>
-						<span className="fa-solid fa-clock ms-2 main-color"></span>
+						<span className="fa-solid fa-clock ms-2 main-color" aria-hidden="true"></span>
 						{date}
 					</span>
 					<span>
-						<span className="fa-solid fa-user main-color ms-2"></span>
+						<span className="fa-solid fa-user main-color ms-2" aria-hidden="true"></span>
 						{vote_count}
 					</span>
 					<div className="rating-stars d-flex flex-row-reverse gap-1 justify-content-center mt-2">
@@ -26,6 +27,7 @@ const DesktopDescription = ({ title, date, vote_count, rate }) => {
 									className={`fa-solid fa-star ${
 										Math.round(+rate / 2) > i ? "text-warning" : ""
 									}`}
+									aria-hidden="true"
 								></span>
 							))}
 					</div>
@@ -33,7 +35,10 @@ const DesktopDescription = ({ title, date, vote_count, rate }) => {
 			</div>
 		</figcaption>
 	);
-};
+});
+
+// Add display name to prevent ESLint warning
+DesktopDescription.displayName = "DesktopDescription";
 
 // PropTypes Validation
 DesktopDescription.propTypes = {

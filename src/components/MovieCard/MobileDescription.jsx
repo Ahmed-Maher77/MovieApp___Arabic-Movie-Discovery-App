@@ -1,8 +1,9 @@
 import propTypes from "prop-types";
+import { memo } from "react";
 
-const MobileDescription = ({ title, rate }) => {
+const MobileDescription = memo(({ title, rate }) => {
 	return (
-		<figcaption className="card-body py-3 position-absolute bottom-0 w-100 px-4 d-flex justify-content-center align-items-center d-lg-none">
+		<figcaption className="card-body py-3 position-absolute bottom-0 w-100 px-4 d-flex justify-content-center align-items-center d-lg-none" aria-label={`Movie details for ${title}`}>
 			<div>
 				{/* Movie Title */}
 				<h3 className="card-title text-center fs-5">{title}</h3>
@@ -18,6 +19,7 @@ const MobileDescription = ({ title, rate }) => {
 									className={`fa-solid fa-star ${
 										Math.round(+rate / 2) > i ? "text-warning" : ""
 									}`}
+									aria-hidden="true"
 								></span>
 							))}
 					</div>
@@ -25,7 +27,10 @@ const MobileDescription = ({ title, rate }) => {
 			</div>
 		</figcaption>
 	);
-};
+});
+
+// Add display name to prevent ESLint warning
+MobileDescription.displayName = "MobileDescription";
 
 // PropTypes validation
 MobileDescription.propTypes = {

@@ -1,7 +1,9 @@
 import propTypes from "prop-types";
 
 const formatList = (list, key) => {
-	if (!list?.length) return "غير متوفر";
+	if (!list?.length) {
+		return "غير متوفر";
+	}
 	return list.map((item) => item[key]).join(" ⦁ ");
 };
 
