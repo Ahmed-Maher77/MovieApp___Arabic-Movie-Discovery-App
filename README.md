@@ -4,7 +4,7 @@ MovieApp is a simple yet powerful movie discovery platform where users can searc
 
 <hr/>
 
-🌐**Demo (Live Preview):** <a href="" target="_blank"></a> 
+🌐**Demo (Live Preview):** <a href="https://movie-discovery-app-gamma.vercel.app/" target="_blank">https://movie-discovery-app-gamma.vercel.app/</a> 
 
 <hr />
 
@@ -35,7 +35,7 @@ MovieApp is a simple yet powerful movie discovery platform where users can searc
 
 ## 🔧 Installation & Setup  
 1. **Clone the repository:** <br/>
--- git clone https://github.com/yourusername/CineScope.git <br/>
+-- git clone https://github.com/Ahmed-Maher77/MovieApp___Movie-Discovery-App.git <br/>
 -- cd MovieApp
 2. **Install dependencies:** <br/>
 -- Copy code <br/>
