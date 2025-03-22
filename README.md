@@ -1,4 +1,4 @@
-# 🎬 MovieApp - Movie Discovery App
+# 🎬 MovieApp - Movie Discovery App (Arabic)
 
 MovieApp is a simple yet powerful movie discovery platform where users can search for movies, browse details, and explore ratings, genres, and release dates. Built with modern web technologies, it ensures a smooth and engaging experience.
 
