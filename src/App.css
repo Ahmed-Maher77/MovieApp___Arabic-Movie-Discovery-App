@@ -61,10 +61,12 @@ body {
 .d-gray-fixed-color {
 	color: var(--d-gray-fixed-color);
 }
+
 /* Transations */
 .trans-3 {
 	transition: var(--trans-3);
 }
+
 /* Buttons */
 .btn-main {
 	background-color: var(--main-c);
@@ -77,9 +79,13 @@ body {
 		color: var(--main-c);
 	}
 }
-/* Width */
+
+/* Dimensions */
 .w-fit {
 	width: fit-content;
+}
+.page-height {
+	min-height: calc(100vh - 65px);
 }
 
 /* Pagination Styles */

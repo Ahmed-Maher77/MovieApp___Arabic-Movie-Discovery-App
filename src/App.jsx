@@ -1,21 +1,27 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./App.css";
-import React, { Suspense, useMemo } from "react";
+import { store } from "./utils/redux-toolkit/store";
 import { Provider } from "react-redux";
+import React, { Suspense, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import store from "./utils/redux-toolkit/store.js";
-
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import MainLoader from "./components/Loader/MainLoader";
+import RequireAuth from "./common/Authentication/RequireAuth.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 // Lazy-loaded pages to improve performance
 const MoviesList = React.lazy(() => import("./pages/MoviesList/MoviesList"));
-const MoviesDetails = React.lazy(() => import("./pages/MoviesDetails/MoviesDetails"));
+const MoviesDetails = React.lazy(() =>
+	import("./pages/MoviesDetails/MoviesDetails")
+);
+const Watchlist = React.lazy(() => import("./pages/Watchlist/Watchlist"));
 const NotFound = React.lazy(() => import("./pages/NotFound.jsx"));
 
 function App() {
-	const router = useMemo(       // to prevent unnecessary re-creation of the router
+	const router = useMemo(
 		() =>
 			createBrowserRouter([
 				{
@@ -39,6 +45,37 @@ function App() {
 							),
 						},
 						{
+							path: "/profile",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<RequireAuth>
+										{" "}
+										<Profile />{" "}
+									</RequireAuth>
+								</Suspense>
+							),
+						},
+						{
+							path: "/login",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<RequireAuth>
+										<div>Login Page</div>
+									</RequireAuth>
+								</Suspense>
+							),
+						},
+						{
+							path: "/watchlist",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<RequireAuth>
+										<Watchlist />
+									</RequireAuth>
+								</Suspense>
+							),
+						},
+						{
 							path: "*",
 							element: (
 								<Suspense fallback={<MainLoader />}>
@@ -54,7 +91,8 @@ function App() {
 
 	return (
 		<Provider store={store}>
-			<AnimatePresence mode="wait">       {/* for smooth page transitions */}
+			<ToastContainer position="top-center" autoClose={2000} />
+			<AnimatePresence mode="wait">
 				<motion.div key={window.location.pathname}>
 					<RouterProvider router={router} />
 				</motion.div>

@@ -3,7 +3,7 @@ import { memo } from "react";
 
 const DesktopDescription = memo(({ title, date, vote_count, rate }) => {
 	return (
-		<figcaption className="card-body position-absolute w-100 h-100 px-4 d-flex justify-content-center align-items-center d-none d-lg-flex" aria-label={`Movie details for ${title}`}>
+		<figcaption className="card-body position-absolute w-100 h-100 px-4 d-flex justify-content-center align-items-center d-none d-lg-flex" aria-label={`Movie details for ${title}`} style={{paddingBlock: "2rem"}}>
 			<div>
 				{/* Movie Title */}
 				<h3 className="card-title text-center fs-5">{title}</h3>

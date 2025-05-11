@@ -5,6 +5,7 @@ import { useCallback, useLayoutEffect } from "react";
 import { setIsLargeScreen } from "../utils/redux-toolkit/windowSlice.js";
 import Footer from "../components/Footer/Footer.jsx";
 import AnimatedScrollToTop from "../common/AnimatedScrollToTop.jsx";
+import { setIsAuth } from "../utils/redux-toolkit/authSlice.js";
 
 const Layout = () => {
 	const dispatch = useDispatch();

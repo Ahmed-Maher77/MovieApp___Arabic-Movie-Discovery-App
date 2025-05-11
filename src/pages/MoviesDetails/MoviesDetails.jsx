@@ -1,16 +1,20 @@
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { moviesDetailsPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
 import useFetchMovie from "../../utils/api/useFetchMovie";
 import Loader from "../../components/Loader/Loader";
-import "./MoviesDetails.css";
 import formatList from "./formatList";
 import GoBack_Btn from "./GoBack_Btn";
 import MovieContent from "./MovieContent";
-import { motion } from "framer-motion";
-import { moviesDetailsPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
+import "./MoviesDetails.css";
+
 
 const MoviesDetails = () => {
 	const { id } = useParams();
 	const { data: movieData, isLoading, error } = useFetchMovie(id);
+
+	console.log("movieData:", movieData);
+	
 
 	// Loading State
 	if (isLoading) {
@@ -76,6 +80,7 @@ const MoviesDetails = () => {
 		{ label: "اللغات المتاحة", value: formattedLanguages },
 	];
 
+
 	return (
 		<motion.div
 			className="Movies-Details overflow-hidden"
@@ -94,8 +99,11 @@ const MoviesDetails = () => {
 					homepage={homepage}
 					title={title}
 					movieDetails={movieDetails}
+					id={id}
 					overview={overview}
 				/>
+
+				
 			</div>
 		</motion.div>
 	);
