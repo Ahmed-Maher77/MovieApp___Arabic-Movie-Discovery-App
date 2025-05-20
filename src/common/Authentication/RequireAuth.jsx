@@ -1,35 +1,38 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import MainLoader from "../../components/Loader/MainLoader";
+import useGoogleLogin from "../../hooks/useGoogleLogin";
 
 function RequireAuth({ children }) {
 	const isAuth = useSelector((state) => state.auth.isAuth);
-	const navigate = useNavigate();
-	const { pathname } = useLocation();
+	const authLoading = useSelector((state) => state.auth.authLoading);
+	const handleLogin = useGoogleLogin();
 
-	// Redirect authenticated users away from login page
-	useEffect(() => {
-		if (isAuth && pathname === "/login") {
-			navigate("/");
-		}
-	}, [isAuth, pathname, navigate]);
-
-	// Redirect unauthenticated users to login (except on /login)
-	useEffect(() => {
-		if (!isAuth && pathname !== "/login") {
-			navigate("/login", { replace: true });
-		}
-	}, [isAuth, pathname, navigate]);
-
-	// Allow access to login page regardless of auth status
-	if (pathname === "/login") {
-		return children;
+	// Show loader while authLoading
+	if (authLoading) {
+		return <MainLoader />;
 	}
+
 	if (isAuth) {
 		return children;
 	} else {
-		return null;
+		return (
+			<div className="page-height d-flex align-items-center justify-content-center bg-gradient">
+				<div className="container">
+					<div className="text-center d-flex flex-column gap-3">
+						<h2 className="fw-bold">يرجى تسجيل الدخول اولاً</h2>
+						<p>يرجى تسجيل الدخول أولاً حتى تتمكن من الوصول لهذه الصفحة</p>
+						<button
+							className="btn-main btn d-flex gap-2 align-items-center w-fit mx-auto"
+							onClick={handleLogin}
+						>
+							تسجيل الدخول
+							<span className="fa-solid fa-arrow-right"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		);
 	}
 }
 

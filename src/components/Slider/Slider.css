@@ -1,6 +1,11 @@
 .hero-slider {
 	position: relative;
-	background: #000;
+	background: linear-gradient(
+		to left,
+		rgba(0, 0, 0, 0.9) 0%,
+		rgba(0, 0, 0, 0.6) 50%,
+		rgba(0, 0, 0, 0.4) 100%
+	);
 	overflow: hidden;
 }
 
@@ -14,10 +19,21 @@
 	height: 100%;
 	background: linear-gradient(
 		90deg,
-		rgba(0, 0, 0, 0.9) 0%,
-		rgba(0, 0, 0, 0.7) 50%,
-		rgba(0, 0, 0, 0.9) 100%
+		rgba(0, 0, 0, 0.95) 0%,
+		rgba(0, 0, 0, 0.85) 15%,
+		rgba(0, 0, 0, 0.75) 30%, 
+		rgba(0, 0, 0, 0.65) 45%,
+		rgba(0, 0, 0, 0.55) 60%,
+		rgba(0, 0, 0, 0.45) 75%,
+		rgba(0, 0, 0, 0.35) 90%,
+		rgba(0, 0, 0, 0.25) 100%
+	),
+	radial-gradient(
+		circle at center,
+		rgba(var(--main-c-rgb, 188, 97, 50), 0.15) 0%,
+		transparent 70%
 	);
+	backdrop-filter: blur(2px);
 }
 
 .poster-wrapper {

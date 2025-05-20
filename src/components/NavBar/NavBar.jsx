@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchByValue } from "../../utils/redux-toolkit/searchMovies_Slice";
@@ -19,6 +19,7 @@ const NavBar = memo(() => {
 	const [showSearch, setShowSearch] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const closeBtnRef = useRef();
+	const navigate = useNavigate();
 
 	// Toggle search bar only on the movies page
 	useEffect(() => {
@@ -39,9 +40,16 @@ const NavBar = memo(() => {
 	// Handle search input efficiently
 	const handleSearch = useCallback(
 		(e) => {
-			dispatch(setSearchByValue(e.target.value));
+			const searchValue = e.target.value;
+			dispatch(setSearchByValue(searchValue));
+			if (searchValue.length > 0 && pathname !== "/movies") {
+				// Use setTimeout to ensure Redux state is updated before navigation
+				setTimeout(() => {
+					navigate("/movies");
+				}, 0);
+			}
 		},
-		[dispatch]
+		[dispatch, navigate, pathname]
 	);
 
 	return (
@@ -55,9 +63,9 @@ const NavBar = memo(() => {
 					<div className="burger-search-wraper d-flex gap-3 align-items-center">
 						{/* Mobile search icon (hidden on movies page) */}
 						<SearchIcon
-							onClick={() => setShowSearch(true)}
+							onClick={() => setShowSearch((prev) => !prev)}
 							className={`ms-auto ${
-								pathname === "/movies" ? "d-none" : "d-block d-lg-block"
+								pathname === "/movies" ? "d-none" : "d-block"
 							} d-lg-none`}
 							ariaLabel="Search movies"
 						/>
@@ -80,7 +88,7 @@ const NavBar = memo(() => {
 						/>
 						{/* Desktop search icon (hidden on movies page) */}
 						<SearchIcon
-							onClick={() => setShowSearch(true)}
+							onClick={() => setShowSearch((prev) => !prev)}
 							className={`${
 								pathname === "/movies" ? "d-none" : ""
 							} d-none d-lg-block`}

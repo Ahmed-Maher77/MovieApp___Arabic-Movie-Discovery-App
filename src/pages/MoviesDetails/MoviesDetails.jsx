@@ -13,9 +13,6 @@ const MoviesDetails = () => {
 	const { id } = useParams();
 	const { data: movieData, isLoading, error } = useFetchMovie(id);
 
-	console.log("movieData:", movieData);
-	
-
 	// Loading State
 	if (isLoading) {
 		return (

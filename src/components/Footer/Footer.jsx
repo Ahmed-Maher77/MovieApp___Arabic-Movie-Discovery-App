@@ -21,7 +21,7 @@ const Footer = memo(() => {
                         <NavLink to="/movies" aria-label="انتقل إلى صفحة الأفلام">الأفلام</NavLink>
 					</li>
 					<li>
-					<a href="https://ahmedmaher-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" title="من نحن">من نحن</a>
+					<NavLink to="/about-us" aria-label="انتقل إلى صفحة المن نحن">من نحن</NavLink>
 					</li>
 					<li>
 					<a href="https://ahmedmaher-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" title="اتصل بنا">اتصل بنا</a>

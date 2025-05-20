@@ -8,17 +8,18 @@ import Home from "./pages/Home";
 import MainLoader from "./components/Loader/MainLoader";
 import RequireAuth from "./common/Authentication/RequireAuth.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AuthProvider from "./common/Authentication/AuthProvider";
+import ToastWrapper from "./components/ToastWrapper/ToastWrapper";
 
 // Lazy-loaded pages to improve performance
 const MoviesList = React.lazy(() => import("./pages/MoviesList/MoviesList"));
-const MoviesDetails = React.lazy(() =>
-	import("./pages/MoviesDetails/MoviesDetails")
-);
+const MoviesDetails = React.lazy(() => import("./pages/MoviesDetails/MoviesDetails"));
 const Watchlist = React.lazy(() => import("./pages/Watchlist/Watchlist"));
 const NotFound = React.lazy(() => import("./pages/NotFound.jsx"));
+const AboutUs = React.lazy(() => import("./pages/AboutUs/AboutUs.jsx"));
+
 
 function App() {
 	const router = useMemo(
@@ -49,18 +50,7 @@ function App() {
 							element: (
 								<Suspense fallback={<MainLoader />}>
 									<RequireAuth>
-										{" "}
-										<Profile />{" "}
-									</RequireAuth>
-								</Suspense>
-							),
-						},
-						{
-							path: "/login",
-							element: (
-								<Suspense fallback={<MainLoader />}>
-									<RequireAuth>
-										<div>Login Page</div>
+										<Profile />
 									</RequireAuth>
 								</Suspense>
 							),
@@ -72,6 +62,14 @@ function App() {
 									<RequireAuth>
 										<Watchlist />
 									</RequireAuth>
+								</Suspense>
+							),
+						},
+						{
+							path: "/about-us",
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<AboutUs />
 								</Suspense>
 							),
 						},
@@ -91,12 +89,14 @@ function App() {
 
 	return (
 		<Provider store={store}>
-			<ToastContainer position="top-center" autoClose={2000} />
-			<AnimatePresence mode="wait">
-				<motion.div key={window.location.pathname}>
-					<RouterProvider router={router} />
-				</motion.div>
-			</AnimatePresence>
+			<AuthProvider>
+				<ToastWrapper />
+				<AnimatePresence mode="wait">
+					<motion.div key={window.location.pathname}>
+						<RouterProvider router={router} />
+					</motion.div>
+				</AnimatePresence>
+			</AuthProvider>
 		</Provider>
 	);
 }

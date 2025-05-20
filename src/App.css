@@ -62,7 +62,7 @@ body {
 	color: var(--d-gray-fixed-color);
 }
 
-/* Transations */
+/* Transitions */
 .trans-3 {
 	transition: var(--trans-3);
 }
@@ -77,6 +77,20 @@ body {
 		background-color: transparent;
 		border-color: #cc5114;
 		color: var(--main-c);
+	}
+}
+.login-btn {
+	background-color: var(--white-c);
+	color: var(--main-c);
+	border-color: var(--main-c);
+	padding: 10px 15px;
+	border-radius: 20px;
+	border: 1px solid var(--main-c);
+	transition: var(--trans-3);
+	&:hover {
+		background-color: var(--main-c);
+		border: 1px solid var(--white-c);
+		color: var(--white-c);
 	}
 }
 
@@ -103,6 +117,39 @@ body {
 		}
 	}
 }
+
+/* Tooltip */
+.tooltip-container {
+	position: relative;
+	&:hover .Tooltip {
+		display: block;
+	}
+}
+
+/* Animations */
+.animated-arrow-hover-container {
+	&:hover {
+		.animated-arrow-hover {
+			animation: arrow-hover 1s ease-in-out;
+			animation-iteration-count: infinite;
+			animation-fill-mode: both;
+		}
+	}
+}
+
+@keyframes arrow-hover {
+	0% {
+		transform: translateX(0);
+	}
+	50% {
+		transform: translateX(5px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

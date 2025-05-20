@@ -1,0 +1,93 @@
+.login-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	backdrop-filter: blur(5px);
+}
+
+.login-modal-content {
+	background: white;
+	border-radius: 12px;
+	padding: 20px;
+	width: 90%;
+	max-width: 400px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	animation: modalFadeIn 0.3s ease;
+}
+
+.login-modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.login-modal-header h3 {
+	margin: 0;
+	color: var(--main-c, #bc6132);
+	font-size: 1.5rem;
+}
+
+.close-btn {
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: #666;
+	transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+	color: var(--main-c, #bc6132);
+}
+
+.login-modal-body {
+	text-align: center;
+}
+
+.login-modal-body p {
+	margin-bottom: 20px;
+	color: #666;
+	font-size: 1.1rem;
+}
+
+.login-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background: white;
+	color: #333;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+	background: #f8f8f8;
+	transform: translateY(-2px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	color: var(--main-c, #bc6132);
+}
+
+@keyframes modalFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

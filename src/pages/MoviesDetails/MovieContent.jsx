@@ -2,14 +2,13 @@ import { NavLink } from "react-router-dom";
 import MovieDetail from "./MovieDetail";
 import MoviePoster from "./MoviePoster";
 import PropTypes from "prop-types";
-import { memo, useMemo, useState, useEffect } from "react";
+import { memo, useMemo, useState } from "react";
 import WatchlistButton from "./WatchlistButton";
-import {
-	checkWatchlistStatus,
-	addToWatchlist,
-	removeFromWatchlist,
-} from "../../utils/api/watchlistOperations";
+import { useWatchlist } from "../../hooks/useWatchlist";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import useGoogleLogin from "../../hooks/useGoogleLogin";
+import LoginModal from "../../components/LoginModal/LoginModal";
 
 const MovieContent = ({
 	poster_path,
@@ -19,44 +18,36 @@ const MovieContent = ({
 	overview,
 	id,
 }) => {
-	const [isInWatchlistState, setIsInWatchlistState] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+	const { isInWatchlist, addMovie, removeMovie } = useWatchlist();
+	const [isLoading, setIsLoading] = useState(false);
+	const [showLoginModal, setShowLoginModal] = useState(false);
+	const isAuth = useSelector((state) => state.auth.isAuth);
+	const handleLogin = useGoogleLogin();
 
-	useEffect(() => {
-		const checkStatus = async () => {
-			const exists = await checkWatchlistStatus(id);
-			setIsInWatchlistState(exists);
-			setIsLoading(false);
-		};
-		checkStatus();
-	}, [id]);
+	const isInWatchlistState = isInWatchlist(id);
 
 	const handleWatchlist = async () => {
-		setIsLoading(true);
-		const movieId = id;
-		const movieData = {
-			id: movieId,
-			title,
-			poster_path,
-		};
+		if (!isAuth) {
+			setShowLoginModal(true);
+			return;
+		}
 
+		setIsLoading(true);
 		if (isInWatchlistState) {
-			const success = await removeFromWatchlist(movieId);
-			if (success) {
-				setIsInWatchlistState(false);
-				toast.success("تمت إزالة الفيلم من قائمة المشاهدة!");
-			}
+			await removeMovie(id);
+			toast.success("تمت إزالة الفيلم من قائمة المشاهدة!");
 		} else {
-			const success = await addToWatchlist(movieData);
-			if (success) {
-				setIsInWatchlistState(true);
-				toast.success("تمت إضافة الفيلم إلى قائمة المشاهدة!");
-			}
+			await addMovie({ id, title, poster_path });
+			toast.success("تمت إضافة الفيلم إلى قائمة المشاهدة!");
 		}
 		setIsLoading(false);
 	};
 
-	console.log(isInWatchlistState);
+	const handleLoginClick = () => {
+		setShowLoginModal(false);
+		handleLogin();
+	};
+
 	// Movie Details
 	const details = useMemo(
 		() =>
@@ -118,6 +109,13 @@ const MovieContent = ({
 					<span className="fa-solid fa-house"></span>
 				</NavLink>
 			</section>
+
+			{/* Login Modal */}
+			<LoginModal
+				isOpen={showLoginModal}
+				onClose={() => setShowLoginModal(false)}
+				onLogin={handleLoginClick}
+			/>
 		</main>
 	);
 };

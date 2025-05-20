@@ -39,9 +39,9 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%) scale(1);
-	width: 22px;
-	height: 22px;
-	border-radius: 7px;
+	width: 15px;
+	height: 15px;
+	border-radius: 4px;
 	background: linear-gradient(135deg, #bc6132 60%, #ffb86c 100%);
 	box-shadow: 0 0 5px #bc6132a0, 0 0 0 #fff;
 	transition: box-shadow 0.3s, transform 0.3s;
@@ -66,11 +66,14 @@
 		font-size: 1.5rem;
 		padding: 0.4rem 1.2rem;
 	}
-	.watchlist-heading::before,
-	.watchlist-heading::after {
+	.watchlist-heading::before {
 		width: 14px;
 		height: 14px;
 		right: -24px;
+	}
+	.watchlist-heading::after {
+		width: 14px;
+		height: 14px;
 		left: -24px;
 	}
 }
@@ -80,11 +83,14 @@
 		font-size: 1.1rem;
 		padding: 0.2rem 0.5rem;
 	}
-	.watchlist-heading::before,
-	.watchlist-heading::after {
+	.watchlist-heading::before {
 		width: 9px;
 		height: 9px;
 		right: -10px;
+	}
+	.watchlist-heading::after {
+		width: 9px;
+		height: 9px;
 		left: -10px;
 	}
 }

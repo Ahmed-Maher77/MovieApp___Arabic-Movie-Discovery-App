@@ -5,6 +5,10 @@ import { memo, useCallback } from "react";
 const Pagination = ({setPage, page, startPage, endPage, totalPages}) => {
     const handleSetPage = useCallback((newPage) => setPage(newPage), [setPage]);
 
+    if (totalPages <= 1) {
+        return null
+    };
+
     return (
         <footer className="Pagination text-center my-3">
             <div className="btn-group gap-2" role="group" aria-label="navigation buttons" style={{marginInline: "auto"}}>

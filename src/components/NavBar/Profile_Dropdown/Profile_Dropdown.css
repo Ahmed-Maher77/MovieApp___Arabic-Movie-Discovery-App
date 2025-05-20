@@ -1,0 +1,117 @@
+.Profile_Dropdown {
+	margin-top: 15px;
+	&.dropdown {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		gap: 10px;
+		position: relative;
+	}
+	& > figure {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		gap: 10px;
+		padding-inline: 15px;
+		margin-bottom: 0;
+		img {
+			display: block;
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+		span {
+			color: #000;
+			font-size: 1.05rem;
+			font-weight: 700;
+			margin-top: 1.5px;
+			&.active {
+				color: var(--white-c);
+			}
+		}
+	}
+	.profile-icon {
+		background-color: #000000;
+		color: #fff;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 32px;
+		cursor: pointer;
+		font-weight: bold;
+		font-family: "FontAwesome";
+		font-size: 0.85rem;
+	}
+	.dropdown-menu {
+		position: absolute;
+		top: 48px;
+		right: 0;
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 6px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		width: 220px;
+		z-index: 1000;
+		padding: 5px;
+	}
+	.dropdown-item {
+		padding: 10px 15px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		color: #404040;
+		border-radius: inherit;
+		&.logout {
+			color: #e91e63;
+		}
+	}
+	.dropdown-item:hover {
+		background-color: #f5f5f5;
+	}
+	.dropdown-divider {
+		height: 1px;
+		background-color: #ddd;
+		margin-block: 4px;
+	}
+	.dropdown-menu::after {
+		content: "";
+		position: absolute;
+		top: -17px;
+		right: 7px;
+		border-width: 8px;
+		border-style: solid;
+		border-color: transparent transparent #fff transparent;
+	}
+}
+@media (min-width: 992px) {
+	&.dropdown {
+		width: fit-content;
+		justify-content: center;
+		padding-block: 0 !important;
+	}
+	.Profile_Dropdown {
+		margin-top: 0;
+		& > figure {
+			margin: 0;
+			span {
+				display: none;
+			}
+		}
+		.profile-icon {
+			font-size: 1rem;
+		}
+	}
+}
+
+
+.left-near {
+	left: 0;
+}

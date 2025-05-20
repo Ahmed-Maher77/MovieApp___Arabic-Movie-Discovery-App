@@ -1,51 +1,38 @@
 import { motion } from "framer-motion";
 import { moviesDetailsPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
-import useFetchWatchlist from "../../utils/api/useFetchWatchlist";
 import LoadingState from "../../components/Watchlist/LoadingState";
 import ErrorState from "../../components/Watchlist/ErrorState";
 import EmptyState from "../../components/Watchlist/EmptyState";
 import MovieCard from "../../components/Watchlist/MovieCard";
-import {
-	removeFromWatchlist,
-	updateWatchedStatus,
-} from "../../utils/api/watchlistOperations";
-import { useState, useEffect } from "react";
+import { useWatchlist } from "../../hooks/useWatchlist";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./Watchlist.module.css";
 import "./Watchlist.css";
 import ToggleBar from "../../components/Watchlist/ToggleBar";
+import { useSelector } from "react-redux";
 
 const Watchlist = () => {
-	const { data: initialWatchlist, isLoading, error } = useFetchWatchlist();
-	const [watchlist, setWatchlist] = useState([]);
+	const {
+		watchlist,
+		removeMovie,
+		toggleWatched,
+	} = useWatchlist();
+	const { loading, error } = useSelector((state) => state.watchlist);
 	const [removingId, setRemovingId] = useState(null);
 	const [togglingWatchedId, setTogglingWatchedId] = useState(null);
 	const [showWatched, setShowWatched] = useState(false);
 
-	useEffect(() => {
-		setWatchlist(initialWatchlist);
-	}, [initialWatchlist]);
-
 	const handleRemoveMovie = async (movieId) => {
 		setRemovingId(movieId);
-		const success = await removeFromWatchlist(movieId);
-		if (success) {
-			setWatchlist((prev) => prev.filter((movie) => movie.id !== movieId));
-			toast.success("تمت إزالة الفيلم من قائمة المشاهدة!");
-		}
+		await removeMovie(movieId);
+		toast.success("تمت إزالة الفيلم من قائمة المشاهدة!");
 		setRemovingId(null);
 	};
 
 	const handleToggleWatched = async (movieId, currentStatus) => {
 		setTogglingWatchedId(movieId);
-		const success = await updateWatchedStatus(movieId, !currentStatus);
-		if (success) {
-			setWatchlist((prev) =>
-				prev.map((movie) =>
-					movie.id === movieId ? { ...movie, isWatched: !currentStatus } : movie
-				)
-			);
-		}
+		await toggleWatched(movieId, !currentStatus);
 		setTogglingWatchedId(null);
 	};
 
@@ -55,7 +42,7 @@ const Watchlist = () => {
 		(movie) => !!movie.isWatched === showWatched
 	);
 
-	if (isLoading) {
+	if (loading) {
 		return <LoadingState />;
 	}
 
