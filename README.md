@@ -33,14 +33,27 @@ MovieApp is a simple yet powerful movie discovery platform where users can searc
 
 <hr />
 
-## 🔧 Installation & Setup  
-1. **Clone the repository:** <br/>
--- git clone https://github.com/Ahmed-Maher77/MovieApp___Movie-Discovery-App.git <br/>
--- cd MovieApp
-2. **Install dependencies:** <br/>
--- Copy code <br/>
--- npm install
-3. **Create a .env file and add your API key:** <br/>
--- VITE_API_KEY=your_api_key_here <br/>
-4. **Start the development server:** <br/>
--- npm run dev
+## 🔧 Installation & Setup
+
+Follow these steps to run the project locally:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Ahmed-Maher77/MovieApp___Movie-Discovery-App.git
+cd MovieApp
+```
+### 2. Install Dependencies
+```bash
+npm install
+```
+### 3. Set Up Environment Variables
+Create a ```.env``` file in the root directory and add your API key:
+```bash
+VITE_API_KEY=your_api_key_here
+```
+### 4. Start the Development Server
+```bash
+npm run dev
+```
+The app will now be running at ```http://localhost:5173``` (or another port if specified).
+
