@@ -13,6 +13,9 @@ export const useWatchlist = () => {
 	const addMovie = async (movie) => {
 		if (!userData) return;
 
+        console.log("Adding movie to watchlist:", movie);
+        
+
 		const movieData = {
 			id: movie.id.toString(),
 			title: movie.title,

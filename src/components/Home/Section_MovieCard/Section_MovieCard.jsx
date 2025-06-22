@@ -1,33 +1,25 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useCallback, memo } from "react";
 import propTypes from "prop-types";
-import "./MovieCard.css";
-import MobileDescription from "./MobileDescription";
-import DesktopDescription from "./DesktopDescription";
-import { movieCardVariants } from "../../utils/Animations_Variants/Animations_Variants";
+import "../../MovieCard/MovieCard.css";
+import MobileDescription from "../../MovieCard/MobileDescription";
+import DesktopDescription from "../../MovieCard/DesktopDescription";
+import { Section_MovieCardVariants } from "../../../utils/Animations_Variants/Animations_Variants";
 
-const MovieCard = memo(
-	({ imgSrc, title, date, vote_count, rate, id, className = "" }) => {
+const Section_MovieCard = memo(
+	({ imgSrc, title, date, vote_count, rate, id }) => {
 		const navigate = useNavigate();
-		const { pathname } = useLocation();
-		const isLargeScreen = useSelector(
-			(state) => state.window_properties.isLargeScreen
-		);
 
 		// Animation logic
 		const [animationCount, setAnimationCount] = useState(0);
-		const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.3 });
+		const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.3 });
 
 		// Prevents unnecessary re-renders of the function
 		const handleNavigation = useCallback(() => {
-			const from = pathname.includes("/tv-series")
-				? "tvSeriesPage"
-				: "moviesPage";
-			navigate(`/movies/${id}`, { state: { from } });
-		}, [navigate, id, pathname]);
+			navigate(`/movies/${id}`);
+		}, [navigate, id]);
 
 		// Ensure state updates only when necessary
 		if (inView && animationCount < 2) {
@@ -37,9 +29,9 @@ const MovieCard = memo(
 		return (
 			<motion.figure
 				ref={ref}
-				className={`MovieCard scroll-animation-box ${className}`}
+				className="MovieCard"
 				onClick={handleNavigation}
-				variants={movieCardVariants}
+				variants={Section_MovieCardVariants}
 				initial="hidden"
 				animate={
 					animationCount > 0 && animationCount <= 2 ? "visible" : "hidden"
@@ -55,17 +47,19 @@ const MovieCard = memo(
 						<img src={imgSrc} alt="Movie poster" className="w-100 h-100" />
 					</div>
 
-					{/* =============== Description >> based on the Screen Size =============== */}
-					{isLargeScreen ? (
-						<DesktopDescription
-							title={title}
-							date={date}
-							vote_count={vote_count}
-							rate={rate}
-						/>
-					) : (
-						<MobileDescription title={title} rate={rate} />
-					)}
+					{/* =============== Description =============== */}
+					<MobileDescription
+						title={title}
+						date={date}
+						vote_count={vote_count}
+						rate={rate}
+					/>
+					<DesktopDescription
+						title={title}
+						date={date}
+						vote_count={vote_count}
+						rate={rate}
+					/>
 				</div>
 			</motion.figure>
 		);
@@ -73,17 +67,16 @@ const MovieCard = memo(
 );
 
 // Add display name to prevent ESLint warning
-MovieCard.displayName = "MovieCard";
+Section_MovieCard.displayName = "TrendingMovieCard";
 
 // PropTypes Validation
-MovieCard.propTypes = {
+Section_MovieCard.propTypes = {
 	imgSrc: propTypes.string.isRequired,
 	title: propTypes.string.isRequired,
 	date: propTypes.string.isRequired,
 	vote_count: propTypes.number.isRequired,
 	rate: propTypes.number.isRequired,
 	id: propTypes.number.isRequired,
-	className: propTypes.string,
 };
 
-export default MovieCard;
+export default Section_MovieCard;

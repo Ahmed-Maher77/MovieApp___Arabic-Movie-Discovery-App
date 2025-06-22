@@ -1,5 +1,4 @@
 .MovieCard {
-    max-height: 350px;
 	.card {
 		max-width: 330px;
 		height: 100%;
@@ -7,6 +6,7 @@
 		margin-inline: auto;
 		overflow: hidden;
 		cursor: pointer;
+		background-color: transparent;
 		.card-body {
 			background-color: #0000009c;
 			backdrop-filter: blur(3px);
@@ -17,6 +17,15 @@
 			}
 			.details {
 				color: var(--gray-fixed-c);
+			}
+		}
+		.card-img {
+			img {
+				max-height: 380px;
+				height: 325px !important;
+				object-fit: cover;
+				width: 100%;
+				height: 100%;
 			}
 		}
 		&:hover {

@@ -17,6 +17,9 @@ const NavLinks = ({ closeMenu }) => {
 			<NavLinkItem to="/movies" onClick={closeMenu}>
 				الأفلام
 			</NavLinkItem>
+			<NavLinkItem to="/tv-series" onClick={closeMenu}>
+				TV المسلسلات
+			</NavLinkItem>
 			<NavLinkItem to="/watchlist" onClick={closeMenu}>
 				قائمة المشاهدة
 			</NavLinkItem>

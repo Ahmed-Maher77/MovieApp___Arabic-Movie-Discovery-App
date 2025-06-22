@@ -49,6 +49,20 @@ export const movieCardVariants = {
 	},
 };
 
+// ================= Section_MovieCard Component: =================
+export const Section_MovieCardVariants = {
+	hidden: {
+		opacity: 0,
+		scale: 0.8,
+		transition: { duration: 0.5 },
+	},
+	visible: {
+		opacity: 1,
+		scale: 1,
+		transition: { duration: 0.5, ease: "easeOut" },
+	},
+};
+
 // ================= Slider Component: =================
 export const HomeSliderPosterVariants = {
 	initial: { opacity: 0, y: 100, transition: { duration: 0.9 } },

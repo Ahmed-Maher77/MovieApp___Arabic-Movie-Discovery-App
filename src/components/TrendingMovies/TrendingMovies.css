@@ -1,0 +1,54 @@
+.trending-swiper {
+	padding: 20px 0;
+	position: relative;
+}
+
+/* Navigation Buttons */
+.trending-swiper .swiper-button-next,
+.trending-swiper .swiper-button-prev {
+	color: var(--main-c);
+	background: rgba(255, 255, 255, 0.9);
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+}
+
+.trending-swiper .swiper-button-next:after,
+.trending-swiper .swiper-button-prev:after {
+	font-size: 18px;
+}
+
+.trending-swiper .swiper-button-next:hover,
+.trending-swiper .swiper-button-prev:hover {
+	background: var(--main-c);
+	color: white;
+}
+
+/* Pagination */
+.trending-swiper .swiper-pagination {
+	position: relative;
+	margin-top: 20px;
+}
+
+.trending-swiper .swiper-pagination-bullet {
+	width: 10px;
+	height: 10px;
+	background: #ddd;
+	opacity: 1;
+	transition: all 0.3s ease;
+}
+
+.trending-swiper .swiper-pagination-bullet-active {
+	background: var(--main-c);
+	transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.trending-swiper .swiper-button-next,
+	.trending-swiper .swiper-button-prev {
+		display: none;
+	}
+}

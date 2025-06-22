@@ -1,0 +1,19 @@
+.Section-Heading {
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+        position: relative;
+        padding-bottom: 0.5rem;
+        &::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--main-c);
+
+        }
+    }
+}

@@ -102,6 +102,11 @@ body {
 	min-height: calc(100vh - 65px);
 }
 
+/* Cursor */
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /* Pagination Styles */
 .Pagination {
 	button {

@@ -1,12 +1,26 @@
 import propTypes from "prop-types";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { truncateText } from "../../utils/Global_Functions/Global_Functions";
 
 const MobileDescription = memo(({ title, rate }) => {
+	const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+
+	// update isSmallScreen state on window resize
+	useEffect(() => {
+		const handleResize = () => {
+			setIsSmallScreen(window.innerWidth < 768);
+		};
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	return (
 		<figcaption className="card-body py-3 position-absolute bottom-0 w-100 px-4 d-flex justify-content-center align-items-center d-lg-none" aria-label={`Movie details for ${title}`}>
 			<div>
 				{/* Movie Title */}
-				<h3 className="card-title text-center fs-5">{title}</h3>
+				<h3 className="card-title text-center fs-5">
+					{isSmallScreen ? truncateText(title, 17) : truncateText(title, 13)}
+				</h3>
 
 				{/* Movie Details */}
 				<div className="details d-flex flex-column gap-2 text-center mt-2">

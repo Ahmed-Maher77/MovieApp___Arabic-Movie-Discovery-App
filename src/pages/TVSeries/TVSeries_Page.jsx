@@ -1,20 +1,20 @@
-import { useState, useMemo, useCallback, memo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { setSearchByValue } from "../../utils/redux-toolkit/searchMovies_Slice";
-import MovieCard from "../../components/MovieCard/MovieCard";
-import useFetchAllMovies from "../../utils/api/useFetchAllMovies";
-import useSearchMovies from "../../utils/api/useSearchMovies";
+import { setSearchTvSeriesByValue } from "../../utils/redux-toolkit/searchTvSeries_Slice";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import useFetchTvSeries from "../../utils/api/useFetchTvSeries";
+import useSearchTvSeries from "../../utils/api/useSearchTvSeries";
 import Loader from "../../components/Loader/Loader";
-import Pagination from "./Pagination";
 import { motion } from "framer-motion";
 import { moviesListPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
 import AnimatedScrollToTop from "../../common/AnimatedScrollToTop";
+import Pagination from "../MoviesList/Pagination";
+import MovieCard from "../../components/MovieCard/MovieCard";
 
-const MoviesList = () => {
+const TVSeries_Page = () => {
 	const dispatch = useDispatch();
 	const reduxSearchQuery = useSelector(
-		(state) => state.search_movies.searchByValue
+		(state) => state.search_tvseries.searchByValue
 	);
 
 	// Query params for pagination and search
@@ -26,7 +26,7 @@ const MoviesList = () => {
 	// Keep Redux search in sync with URL
 	useEffect(() => {
 		if (reduxSearchQuery !== initialSearch) {
-			dispatch(setSearchByValue(initialSearch));
+			dispatch(setSearchTvSeriesByValue(initialSearch));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialSearch]);
@@ -48,7 +48,8 @@ const MoviesList = () => {
 		const urlPage = parseInt(searchParams.get("page"), 10) || 1;
 		const urlSearch = searchParams.get("search") || "";
 		if (urlPage !== page) setPage(urlPage);
-		if (urlSearch !== reduxSearchQuery) dispatch(setSearchByValue(urlSearch));
+		if (urlSearch !== reduxSearchQuery)
+			dispatch(setSearchTvSeriesByValue(urlSearch));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchParams]);
 
@@ -58,27 +59,27 @@ const MoviesList = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [reduxSearchQuery]);
 
-	// Fetch all movies (when not searching)
-	const { data: allMovies, isLoading, error } = useFetchAllMovies(page);
+	// Fetch all tv series (when not searching)
+	const { data: allSeries, isLoading, error } = useFetchTvSeries(page);
 
-	// Fetch searched movies (if search query is present)
+	// Fetch searched tv series (if search query is present)
 	const {
-		data: searchedMovies,
+		data: searchedTvSeries,
 		isLoading: isSearching,
 		error: searchError,
-	} = useSearchMovies(reduxSearchQuery);
+	} = useSearchTvSeries(reduxSearchQuery);
 
-	// Determine which movies to display
+	// Determine which tv series to display
 	const isSearchingMode = reduxSearchQuery.length > 0;
-	const moviesToDisplay = useMemo(
-		() => (isSearchingMode ? searchedMovies?.results : allMovies?.results),
-		[isSearchingMode, searchedMovies, allMovies]
+	const tvSeriesToDisplay = useMemo(
+		() => (isSearchingMode ? searchedTvSeries?.results : allSeries?.results),
+		[isSearchingMode, searchedTvSeries, allSeries]
 	);
 
 	// Pagination logic (disabled for search results)
 	const totalPages = isSearchingMode
 		? 1 // No pagination for search results
-		: Math.min(allMovies?.total_pages || 1, 500);
+		: Math.min(allSeries?.total_pages || 1, 500);
 	const pageRange = 1; // Number of pages to show at a time
 	const startPage = Math.max(1, page - Math.floor(pageRange / 2));
 	const endPage = Math.min(totalPages, startPage + pageRange - 1);
@@ -95,7 +96,10 @@ const MoviesList = () => {
 				className="d-flex justify-content-center align-items-center"
 				style={{ minHeight: "calc(100vh - 73px)" }}
 			>
-				<Loader title="...Loading Movies" aria-live="polite" />
+				<Loader
+					title={isSearchingMode ? "جاري البحث..." : "...Loading TV Series"}
+					aria-live="polite"
+				/>
 			</div>
 		);
 	}
@@ -107,7 +111,7 @@ const MoviesList = () => {
 				className="text-center my-5"
 				style={{ minHeight: "calc(100vh - 400px)" }}
 			>
-				<h2>Something went wrong</h2>
+				<h2>حدث خطأ ما</h2>
 				<span className="red-color">{hasError}</span>
 			</div>
 		);
@@ -115,9 +119,9 @@ const MoviesList = () => {
 
 	return (
 		<motion.div
-			className="MoviesList overflow-hidden"
+			className="TVSeries_Page overflow-hidden"
 			style={{ minHeight: "calc(100vh - 73px)" }}
-			key="MoviesList"
+			key="TVSeries_Page"
 			variants={moviesListPageVariants}
 			initial="initial"
 			animate="animate"
@@ -126,34 +130,40 @@ const MoviesList = () => {
 			<div className="container py-4">
 				{/* ================== Display Data (Movies Cards) ================== */}
 				<main className="row row-cols-xl-5">
-					{moviesToDisplay?.length > 0 ? (
-						moviesToDisplay?.map((movie) => (
+					{tvSeriesToDisplay?.length > 0 ? (
+						tvSeriesToDisplay?.map((series) => (
 							<MovieCard
-								key={movie.id}
-								imgSrc={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-								title={movie.title}
-								date={movie.release_date}
-								vote_count={movie.vote_count}
-								rate={movie.vote_average}
-								id={movie.id}
-								className="col-12 col-sm-6 col-md-4 col-lg-3"
+								key={series.id}
+								imgSrc={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
+								title={series.name}
+								date={series.first_air_date}
+								vote_count={series.vote_count}
+								rate={series.vote_average}
+								id={series.id}
+								className="col-12 col-sm-6 col-md-4 col-lg-3 col"
 							/>
 						))
 					) : (
 						<div className="text-center my-5">
-							<h2>لا يوجد أفلام...</h2>
+							<h2>
+								{isSearchingMode
+									? "لم يتم العثور على نتائج..."
+									: "لا يوجد مسلسلات..."}
+							</h2>
 						</div>
 					)}
 				</main>
 
 				{/* ================== Pagination ================== */}
-				<Pagination
-					setPage={handleSetPage}
-					page={page}
-					startPage={startPage}
-					endPage={endPage}
-					totalPages={totalPages}
-				/>
+				{!isSearchingMode && totalPages > 1 && (
+					<Pagination
+						setPage={handleSetPage}
+						page={page}
+						startPage={startPage}
+						endPage={endPage}
+						totalPages={totalPages}
+					/>
+				)}
 
 				{/* ================== Scroll to Top when page changes ================== */}
 				<AnimatedScrollToTop dependancy={page} />
@@ -162,4 +172,4 @@ const MoviesList = () => {
 	);
 };
 
-export default memo(MoviesList);
+export default TVSeries_Page;

@@ -1,0 +1,67 @@
+.Section-Heading {
+	position: relative;
+
+	.section-title {
+		position: relative;
+		@media (min-width: 768px) {
+			& {
+				font-size: 1.6rem !important;
+			}
+		}
+		&::before {
+			content: "";
+			position: absolute;
+			bottom: -10px;
+			right: 0;
+			width: 50px;
+			height: 3px;
+			background: var(--main-c);
+			border-radius: 10px;
+		}
+	}
+
+	.slider-controls {
+		display: flex;
+		gap: 0.5rem;
+	}
+	
+	.btn-control {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		border: 1px solid var(--main-c);
+		background: transparent;
+		color: var(--main-c);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+	
+	.btn-control:hover:not(:disabled) {
+		background: var(--main-c);
+		color: white;
+	}
+	
+	.btn-control:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	
+	.btn-control span {
+		font-size: 1rem;
+	}
+	
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.slider-controls {
+			display: none;
+		}
+	}
+}
+
+
+.upcoming-movies .Section-Heading .section-title {
+    color: #d4d4d4;
+}

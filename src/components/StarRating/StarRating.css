@@ -1,0 +1,90 @@
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.star-icon {
+    font-size: 14px;
+    color: #ddd;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.star-icon.filled {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    animation: starGlow 2s ease-in-out infinite alternate;
+}
+
+.star-icon:hover {
+    transform: scale(1.1);
+}
+
+.rating-score {
+    font-size: 12.3px;
+    color: #eaeaea;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.rating-score:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Star glow animation */
+@keyframes starGlow {
+    0% {
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    }
+}
+
+/* Enhanced hover effects */
+.star-rating:hover .star-icon.filled {
+    color: #ffed4e;
+    text-shadow: 0 0 15px rgba(255, 237, 78, 0.8);
+}
+
+.star-rating:hover .rating-score {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .star-icon {
+        font-size: 12px;
+    }
+    
+    .rating-score {
+        font-size: 11px;
+        padding: 2px 6px;
+    }
+}
+
+@media (max-width: 576px) {
+    .star-icon {
+        font-size: 11px;
+    }
+    
+    .rating-score {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+}

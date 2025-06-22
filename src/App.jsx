@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import AuthProvider from "./common/Authentication/AuthProvider";
 import ToastWrapper from "./components/ToastWrapper/ToastWrapper";
+import TVSeries_Page from "./pages/TVSeries/TVSeries_Page.jsx";
 
 // Lazy-loaded pages to improve performance
 const MoviesList = React.lazy(() => import("./pages/MoviesList/MoviesList"));
@@ -42,6 +43,14 @@ function App() {
 							element: (
 								<Suspense fallback={<MainLoader />}>
 									<MoviesDetails />
+								</Suspense>
+							),
+						},
+						{
+							path: "/tv-series", 
+							element: (
+								<Suspense fallback={<MainLoader />}>
+									<TVSeries_Page />
 								</Suspense>
 							),
 						},

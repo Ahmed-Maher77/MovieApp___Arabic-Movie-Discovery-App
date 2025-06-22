@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { moviesDetailsPageVariants } from "../../utils/Animations_Variants/Animations_Variants";
 import useFetchMovie from "../../utils/api/useFetchMovie";
@@ -7,11 +7,19 @@ import formatList from "./formatList";
 import GoBack_Btn from "./GoBack_Btn";
 import MovieContent from "./MovieContent";
 import "./MoviesDetails.css";
+import SimilarMovies from "./SimilarMovies/SimilarMovies";
+import useFetchSimilarMovies from "../../utils/api/useFetchSimilarMovies";
 
 
 const MoviesDetails = () => {
 	const { id } = useParams();
-	const { data: movieData, isLoading, error } = useFetchMovie(id);
+	const { state } = useLocation();
+
+	const comingFrom = state?.from || "moviesPage";
+	const { data: movieData, isLoading, error } = useFetchMovie(id, comingFrom);
+
+    const dataType = comingFrom === "moviesPage" ? "movies" : "tv";
+	const { data: similarMovies, isLoading_SimilarMovies, error_SimilarMovies } = useFetchSimilarMovies(dataType, 1, id);
 
 	// Loading State
 	if (isLoading) {
@@ -44,7 +52,6 @@ const MoviesDetails = () => {
 	const {
 		poster_path,
 		homepage,
-		title,
 		vote_average,
 		vote_count,
 		release_date,
@@ -54,6 +61,7 @@ const MoviesDetails = () => {
 		spoken_languages = [],
 		overview,
 	} = movieData;
+    const title = movieData.title || movieData.name;
 
 	// Formatters
 	const formattedGenres = formatList(genres, "name");
@@ -100,7 +108,7 @@ const MoviesDetails = () => {
 					overview={overview}
 				/>
 
-				
+				<SimilarMovies data={similarMovies} isLoading={isLoading_SimilarMovies} error={error_SimilarMovies} comingFrom={comingFrom} />
 			</div>
 		</motion.div>
 	);

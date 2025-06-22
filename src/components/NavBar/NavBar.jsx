@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchByValue } from "../../utils/redux-toolkit/searchMovies_Slice";
+import { setSearchTvSeriesByValue } from "../../utils/redux-toolkit/searchTvSeries_Slice";
 import Logo from "./Logo";
 import BurgerMenuButton from "./BurgerMenuButton";
 import SearchIcon from "./SearchIcon";
@@ -15,15 +16,19 @@ const NavBar = memo(() => {
 	const searchByValue = useSelector(
 		(state) => state.search_movies.searchByValue
 	);
+	const searchTvSeriesByValue = useSelector(
+		(state) => state.search_tvseries.searchByValue
+	);
 	const isAuth = useSelector((state) => state.auth.isAuth);
 	const [showSearch, setShowSearch] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const isInMoviesPage = pathname === "/movies";
 	const closeBtnRef = useRef();
 	const navigate = useNavigate();
 
 	// Toggle search bar only on the movies page
 	useEffect(() => {
-		setShowSearch(pathname === "/movies");
+		setShowSearch(pathname === "/movies" || pathname === "/tv-series");
 	}, [pathname]);
 
 	// Close mobile menu
@@ -41,8 +46,12 @@ const NavBar = memo(() => {
 	const handleSearch = useCallback(
 		(e) => {
 			const searchValue = e.target.value;
-			dispatch(setSearchByValue(searchValue));
-			if (searchValue.length > 0 && pathname !== "/movies") {
+			if (isInMoviesPage) {
+				dispatch(setSearchByValue(searchValue));
+			} else {
+				dispatch(setSearchTvSeriesByValue(searchValue));
+			}
+			if (searchValue.length > 0 && pathname !== "/movies" && pathname !== "/tv-series") {
 				// Use setTimeout to ensure Redux state is updated before navigation
 				setTimeout(() => {
 					navigate("/movies");
@@ -99,7 +108,7 @@ const NavBar = memo(() => {
 
 				{/* Search Bar */}
 				<SearchBar
-					value={searchByValue}
+					value={isInMoviesPage ? searchByValue : searchTvSeriesByValue}
 					onChange={handleSearch}
 					onClose={() => setShowSearch(false)}
 					show={showSearch}
