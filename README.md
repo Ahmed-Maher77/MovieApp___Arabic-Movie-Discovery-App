@@ -60,8 +60,8 @@ Follow these steps to run the project locally:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Ahmed-Maher77/MovieApp___Arabic-Movie-Discovery-App.git
-cd MovieApp___Arabic-Movie-Discovery-App
+git clone https://github.com/Ahmed-Maher77/MovieStreamAR___Arabic-Language-Movie-Discovery-App.git
+cd MovieStreamAR___Arabic-Language-Movie-Discovery-App
 ```
 ### 2. Install Dependencies
 ```bash
