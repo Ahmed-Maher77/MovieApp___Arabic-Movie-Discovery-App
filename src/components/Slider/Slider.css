@@ -167,3 +167,9 @@
 	opacity: 0 !important;
 	visibility: hidden !important;
 }
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+	width: 10.3px;
+    height: 10.3px;
+}

@@ -9,8 +9,26 @@ const slides = [
         view: 663,
     },
     {
-        id: 1233069,
+        id: 668489,
         poster: "https://image.tmdb.org/t/p/w1280/65MVgDa6YjSdqzh7YOA04mYkioo.jpg",
+        title: "خراب",
+        overview:
+            "حين تخرج سرقة مخدرات عن نطاق السيطرة بشكل مميت، يشقّ شرطي منهك طريقه عبر عالم الإجرام في مدينة فاسدة لإنقاذ ابن رجل سياسي.",
+        rating: 6.6,
+        view: 557,
+    },
+    {
+        id: 1425045,
+        poster: "https://image.tmdb.org/t/p/w1280/apNfldKI3RiaukNwJzr8EjRG7Wc.jpg",
+        title: "Brick",
+        overview:
+            "عندما يُطوّق جدار غامض البناية السكنية التي يعيش فيها \"تيم\" و\"أوليفيا\" بين عشية وضحاها، يضطران إلى التعاون مع جيرانهما الحذرين للخروج سالمين.",
+        rating: 5.743,
+        view: 127.9943,
+    },
+    {
+        id: 1233069,
+        poster: "https://image.tmdb.org/t/p/w1280/bVm6udIB6iKsRqgMdQh6HywuEBj.jpg",
         title: "حصانة دبلوماسية",
         overview:
             'حين يختفي ابنها داخل قنصلية أمريكية، تبذل الجندية السابقة في القوات الخاصة "سارة" قصارى جهدها للعثور عليه وتكشف عن مؤامرة دنيئة.',
@@ -18,13 +36,13 @@ const slides = [
         view: 244,
     },
     {
-        id: 668489,
-        poster: "https://image.tmdb.org/t/p/w1280/bVm6udIB6iKsRqgMdQh6HywuEBj.jpg",
-        title: "خراب",
+        id: 93405,
+        poster: "https://image.tmdb.org/t/p/w1280/2meX1nMdScFOoV4370rqHWKmXhY.jpg",
+        title: "لعبة الحبّار",
         overview:
-            "حين تخرج سرقة مخدرات عن نطاق السيطرة بشكل مميت، يشقّ شرطي منهك طريقه عبر عالم الإجرام في مدينة فاسدة لإنقاذ ابن رجل سياسي.",
-        rating: 6.6,
-        view: 557,
+            'يقبل مئات اللاعبين الذين يعانون من ضائقة مالية دعوة غريبة للتنافس في ألعاب للأطفال، حيث تنتظرهم جائزة مُغرية تصحبها مخاطر كبيرة ومميتة',
+        rating: 7.9,
+        view: 640.9314,
     },
     {
         id: 497698,
@@ -64,4 +82,6 @@ const slides = [
     },
 ];
 
-export { slides };
+const randomSlides = slides.sort(() => Math.random() - 0.5);
+
+export { randomSlides };

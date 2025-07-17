@@ -36,7 +36,7 @@ const Profile_Dropdown = () => {
 		>
 			<figure onClick={toggleDropdown}>
 				{userImage ? (
-					<img src={userImage} alt={`picture`} />
+					<img src={userImage} alt={`picture`} className="border border-2 border-dark rounded-circle" />
 				) : (
 					<div className="profile-icon">M</div>
 				)}

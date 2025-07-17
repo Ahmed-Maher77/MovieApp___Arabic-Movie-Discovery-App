@@ -9,6 +9,7 @@
 					backdrop-filter: blur(3px);
 					opacity: 0;
 					transition: 0.3s;
+                    border-radius: 5px;
 					&:hover {
 						opacity: 1;
 					}

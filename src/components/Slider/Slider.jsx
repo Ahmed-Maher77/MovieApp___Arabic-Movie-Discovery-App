@@ -10,7 +10,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./Slider.css";
-import { slides as slidesData } from "./slidesData";
+import { randomSlides as slidesData } from "./slidesData";
 
 
 const Slider = () => {

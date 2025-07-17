@@ -1,11 +1,21 @@
 .SimilarMovies_List {
     padding: 2rem 0 0;
+    @media (min-width: 576px) and (max-width: 768px) {
+        .row {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(
+                2,
+                1fr
+            ) !important; /* 2 columns between 576px–768px */
+        }
+    }
 }
 
 .SimilarMovies_List .card {
     border: none;
     background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgb(0 0 0 / 14%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     position: relative;
@@ -18,7 +28,7 @@
 }
 
 .SimilarMovies_List .card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -74,17 +84,10 @@
 
 /* Enhanced Star Rating Styles */
 .SimilarMovies_List .star-rating {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 0.75rem;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    flex-direction: row-reverse;
 }
 
 .SimilarMovies_List .stars {
@@ -92,7 +95,7 @@
 }
 
 .SimilarMovies_List .star-icon {
-    font-size: 13px;
+    font-size: 15px;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
@@ -102,11 +105,11 @@
 }
 
 .SimilarMovies_List .rating-score {
-    font-size: 11px;
+    font-size: 13px;
     color: #6c757d;
     font-weight: 600;
     background: rgba(255, 255, 255, 0.8);
-    padding: 2px 6px;
+    margin-top: 2px;
     border-radius: 10px;
     margin-left: 8px;
 }
@@ -116,22 +119,18 @@
     .SimilarMovies_List {
         padding: 1rem 0;
     }
-    
+
     .SimilarMovies_List .card-img-top {
         height: 220px;
     }
-    
+
     .SimilarMovies_List .card-body {
         padding: 1rem;
     }
-    
+
     .SimilarMovies_List .card-title {
         font-size: 0.9rem;
         min-height: 2.4rem;
-    }
-    
-    .SimilarMovies_List .star-icon {
-        font-size: 12px;
     }
 }
 
@@ -139,7 +138,7 @@
     .SimilarMovies_List .card-img-top {
         height: 200px;
     }
-    
+
     .SimilarMovies_List .card-title {
         font-size: 0.85rem;
         min-height: 2.2rem;
@@ -152,7 +151,8 @@
 }
 
 @keyframes cardPulse {
-    0%, 100% {
+    0%,
+    100% {
         opacity: 1;
         transform: scale(1);
     }
@@ -179,22 +179,33 @@
         background: linear-gradient(145deg, #2c3e50 0%, #34495e 100%);
         color: #ecf0f1;
     }
-    
+
     .SimilarMovies_List .card-body {
         background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
     }
-    
+
     .SimilarMovies_List .card-title {
         color: #ecf0f1;
     }
-    
+
     .SimilarMovies_List .star-rating {
         background: rgba(44, 62, 80, 0.9);
         border: 1px solid rgba(236, 240, 241, 0.2);
     }
-    
+
     .SimilarMovies_List .rating-score {
         background: rgba(44, 62, 80, 0.8);
         color: #bdc3c7;
+    }
+}
+
+@media (max-width: 768px) {
+    .SimilarMovies_List {
+        .row {
+            justify-content: center;
+        }
+        .similar-movie-card {
+            max-width: 330px !important;
+        }
     }
 }

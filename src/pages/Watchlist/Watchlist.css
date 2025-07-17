@@ -166,23 +166,25 @@
 	margin-bottom: 1rem;
 }
 
-.card-body {
-	bottom: 70px;
-	text-align: center;
-	padding: 0px !important;
-	overflow: hidden;
-	.card-title-container {
-		width: 100%;
-		background-color: #0000007a;
-		backdrop-filter: blur(5px);
-		color: white;
-		padding: 15px;
-		width: 100%;
-		transition: transform 0.3s ease;
-		h5.card-title {
-			margin-bottom: 0px !important;
-		}
-	}
+.watchlist-page {
+    .card-body {
+        bottom: 70px;
+        text-align: center;
+        padding: 0px !important;
+        overflow: hidden;
+        .card-title-container {
+            width: 100%;
+            background-color: #0000007a;
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 15px;
+            width: 100%;
+            transition: transform 0.3s ease;
+            h5.card-title {
+                margin-bottom: 0px !important;
+            }
+        }
+    }
 }
 
 .card {
